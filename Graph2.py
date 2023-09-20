@@ -7,6 +7,9 @@ import pprint
 from matplotlib import pyplot as plt
 
 
+
+
+
 def extractSkin(image):
     # Taking a copy of the image
     img = image.copy()
@@ -177,11 +180,12 @@ Skin Image Three   : https://raw.githubusercontent.com/octalpixel/Skin-Extractio
 
 '''
 
-
+def get_brightness(color):
+    return sum(color) / 3  # Simple average of RGB values
 
 
 # Load the image
-image_path = 'JACKIECHAN.jpg'  # Replace with your image path
+image_path = 'ProfileImage.jpg'  # Replace with your image path
 image = cv2.imread(image_path)
 # Resize image to a width of 250
 image = imutils.resize(image, width=250)
@@ -207,6 +211,23 @@ dominantColors = extractDominantColor(skin, hasThresholding=True)
 print("Color Information")
 #颜色 color send 去大预言模型来处理
 prety_print_data(dominantColors)
+
+# Calculate the brightness for each cluster
+brightness_values = [get_brightness(cluster['color']) for cluster in dominantColors]
+
+# Count the number of clusters that are considered brighter (brightness > 128)
+brighter_count = sum(1 for brightness in brightness_values if brightness > 128)
+
+# Count the number of clusters that are considered darker (brightness <= 128)
+darker_count = len(dominantColors) - brighter_count
+
+if brighter_count > darker_count:
+    print("There is a higher frequency of brighter colors.")
+elif brighter_count < darker_count:
+    print("There is a higher frequency of darker colors.")
+else:
+    print("The frequencies of brighter and darker colors are equal.")
+
 
 # Show in the dominant color as bar
 print("Color Bar")
