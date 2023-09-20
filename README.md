@@ -1,5 +1,12 @@
 # SkinColor_Bar
 
+
+->
+
+In this example, the get_brightness function converts the RGB color to HSV and returns the Value component (brightness). The determine_dark_or_light function calculates the brightness of the dominant colors and checks if the sum of the brightness values is greater than half of the maximum possible brightness (128 out of 255). If it is, it concludes that light colors dominate, otherwise, it concludes that dark colors dominate.
+
+__________________________________________________
+
 {'cluster_index': 0,
  'color': [229.44989296757683, 206.88773487670787, 170.09918338223616],
  'color_percentage': 0.3869992789309768}
